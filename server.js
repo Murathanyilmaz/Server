@@ -8,7 +8,7 @@ app.use(cors({
 }));
 
 app.get("/", (req, res) => {
-  res.send("Server working!");
+  res.json({"message":"Server working!"});
 });
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
