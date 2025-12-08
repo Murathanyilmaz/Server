@@ -18,6 +18,12 @@ app.get("/greet", (req, res) => {
   res.json({ message: `Hello, ${name}!` });
 });
 
+app.post("/echo", (req, res) => {
+  console.log(req.body); // { name: "Murat" }
+  res.json({ youSent: req.body });
+});
+
+
 app.use((req, res, next) => {
   res.json({
     method: req.method,
