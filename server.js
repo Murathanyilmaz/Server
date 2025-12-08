@@ -1,7 +1,18 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+const mongoUri = process.env.MONGO_URI;
+
+mongoose.connect(mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected!'))
+.catch(err => console.error('MongoDB connection error:', err));
+
 
 app.use(cors({
   origin: "https://murathanyilmaz.net"
