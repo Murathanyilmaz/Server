@@ -19,19 +19,17 @@ app.get("/greet", (req, res) => {
 });
 
 app.post("/echo", (req, res) => {
-  console.log(req.body); // { name: "Murat" }
+  console.log(req.body);
   res.json({ youSent: req.body });
 });
 
-
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   res.json({
     method: req.method,
     path: req.path,
     headers: req.headers
   });
-});
-
+});*/
 
 //ERROR AND SERVER-SIDE LOGGING
 app.listen(PORT, () => {
