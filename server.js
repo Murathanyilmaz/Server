@@ -3,6 +3,8 @@ const cors = require("cors");
 const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const Message = require("./models/Message");
+
 require('dotenv').config();
 
 async function ConnectDB() {
@@ -15,6 +17,19 @@ async function ConnectDB() {
     }
 }
 
+app.post("/message", async (req, res) => {
+    try {
+        const msg = await Message.create({ text: req.body.text });
+        res.json({ success: true, message: msg });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get("/messages", async (req, res) => {
+    const messages = await Message.find().sort({ createdAt: -1 });
+    res.json(messages);
+});
 
 app.use(cors({
   origin: "https://murathanyilmaz.net"
