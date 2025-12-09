@@ -1,15 +1,27 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const app = express();
-
 const PORT = process.env.PORT || 3000;
+require('dotenv').config();
+
+async function ConnectDB() {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("✅ MongoDB connected");
+    } catch (err) {
+        console.error("❌ MongoDB connection error:", err);
+        process.exit(1);
+    }
+}
+
 
 app.use(cors({
   origin: "https://murathanyilmaz.net"
 }));
 
 app.use(express.json());
+
 
 app.get("/", (req, res) => {
   res.json({"message":"Server working!"});
@@ -33,10 +45,15 @@ app.post("/echo", (req, res) => {
   });
 });*/
 
+
 //ERROR AND SERVER-SIDE LOGGING
-app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`);
+
+ConnectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on ${PORT} & Mongo is connected`);
+  });
 });
+
 app.use((req, res) => {
   console.log();
   res.status(404).json({ message: "Not Found" });
