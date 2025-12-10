@@ -9,7 +9,7 @@ const Message = require("./models/Message");
 /* ---------------------- MIDDLEWARE MUST BE FIRST ---------------------- */
 
 app.use(cors({
-    origin: "https://murathanyilmaz.net", // allow your domain
+    origin: ["http://127.0.0.1:5502", "http://localhost:5502","https://murathanyilmaz.net"] // allow your domain
 }));
 app.use(express.json());
 
