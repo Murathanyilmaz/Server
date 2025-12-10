@@ -78,6 +78,22 @@ ConnectDB().then(() => {
             const saved = await Message.create({ text: msg });
             io.emit("message", saved);
         });
+        socket.on("delete-message", async (messageId) => {
+            try {
+                const result = await Message.findByIdAndDelete(messageId);
+                if (result) {
+                    console.log(`🗑️ Message deleted: ${messageId}`);
+                    io.emit("message-deleted", messageId);
+                }
+                else {
+                    console.warn(`Message ID not found: ${messageId}`);
+                    socket.emit("delete-error", "Message not found.");
+                }
+            } catch (err) {
+                console.error("Error deleting message:", err);
+                socket.emit("delete-error", "Server failed to delete message.");
+            }
+        });
     });
 });
 
