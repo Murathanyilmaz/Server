@@ -8,7 +8,6 @@ const { Server } = require("socket.io");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const Message = require("./models/Message");
-const messageRoutes = require('./routes/MessageRoutes');
 
 // MIDDLEWARE
 
@@ -20,7 +19,7 @@ app.use(express.json());
 //DATABASE CONNECTION
 async function ConnectDB() {
     try {
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URI_Message);
         console.log("✅ MongoDB connected");
     } catch (err) {
         console.error("❌ MongoDB connection error:", err);
